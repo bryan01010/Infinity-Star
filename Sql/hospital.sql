@@ -1,5 +1,3 @@
-
-
 CREATE TABLE persona (
   id_persona int NOT NULL AUTO_INCREMENT,
   nombre     varchar(255),
@@ -100,13 +98,30 @@ CREATE TABLE encuesta (
   FOREIGN KEY (id_documento) REFERENCES documento (id_documento)
 );
 
+CREATE TABLE encuesta (
+  id_encuesta int NOT NULL AUTO_INCREMENT,
+  id_documento int,
+  fecha datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (id_encuesta),
+  FOREIGN KEY (id_documento) REFERENCES documento (id_documento)
+);
+
 CREATE TABLE pregunta (
   id_pregunta int NOT NULL AUTO_INCREMENT,
   id_encuesta int NOT NULL,
-  texto       varchar(255),
-  respuesta   varchar(255),
+  texto varchar(255),
   PRIMARY KEY (id_pregunta),
   FOREIGN KEY (id_encuesta) REFERENCES encuesta (id_encuesta)
+);
+
+CREATE TABLE respuesta (
+  id_respuesta int NOT NULL AUTO_INCREMENT,
+  id_pregunta int NOT NULL,
+  id_paciente int NOT NULL,
+  respuesta varchar(255),
+  PRIMARY KEY (id_respuesta),
+  FOREIGN KEY (id_pregunta) REFERENCES pregunta (id_pregunta),
+  FOREIGN KEY (id_paciente) REFERENCES paciente (id_paciente)
 );
 
 CREATE TABLE encuesta_paciente_entra (
